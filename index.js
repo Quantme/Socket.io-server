@@ -19,6 +19,11 @@ io.on( 'connection', client => {
         console.log( 'Client disconnected' )
     });
 
+    client.on( 'mensaje', payload => {
+        console.log( 'Message:', payload );
+        io.emit( 'mensaje', { admin: 'Nuevo mensaje' } );
+    });
+
 });
 
 // Path to the public folder
