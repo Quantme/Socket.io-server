@@ -8,28 +8,16 @@ const app = express();
 
 // Node server
 const server = require( 'http' ).createServer( app );
-const io = require( 'socket.io' )( server );
 
 // Sockets messages
-io.on( 'connection', client => {
-
-    console.log( 'Client connected' );
-
-    client.on( 'disconnect', () => {
-        console.log( 'Client disconnected' )
-    });
-
-    client.on( 'mensaje', payload => {
-        console.log( 'Message:', payload );
-        io.emit( 'mensaje', { admin: 'Nuevo mensaje' } );
-    });
-
-});
+module.exports.io = require( 'socket.io' )( server );
+require( './sockets/socket' );
 
 // Path to the public folder
 const publicPath = path.resolve( __dirname, 'public' );
 app.use( express.static( publicPath ) );
 
+// Start the server
 server.listen( _port, ( err ) => {
 
     if ( err ) throw new Error( err );
